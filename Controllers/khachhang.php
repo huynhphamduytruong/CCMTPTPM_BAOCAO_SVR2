@@ -87,7 +87,7 @@ class khachhang extends DBControllers{
 				'Email' => $email,
                 'DiaChi' => $address,         
 				'SDT' => $phone,
-				'MatKhau' => md5($password),
+				'MatKhau' => password_hash($password,PASSWORD_DEFAULT),
 				
 			);
 
