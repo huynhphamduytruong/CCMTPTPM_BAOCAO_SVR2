@@ -36,29 +36,30 @@ class khachhang extends DBControllers{
         
     }
 
-        public function kh_login(){
-            $ten = $_POST['Email'];
-			$matkhau = md5($_POST['MatKhau']);
+    public function kh_login()
+    {
+        $ten = $_POST['Email'];
+        $matkhau = $_POST['MatKhau'];
 
-			$table_KH = 'khachhang';
-			$khachhangmodel = $this->load->model('khachhangmodel');
+        $table_KH = 'users';
+        $khachhangmodel = $this->load->model('khachhangmodel');
 
-			$count = $khachhangmodel->login($table_KH,$ten,$matkhau);
+        $flag = $khachhangmodel->login($table_KH, $ten, $matkhau);
 
-			if($count==0){
-				$message['msg'] = "User hoặc mật khẩu sai,xin kiểm tra lại";
-				header('Location:'.BASE_URL."/khachhang/dangnhap?msg=".urlencode(serialize($message)));
-			}else{
+        if (!$flag) {
+            $message['msg'] = "User hoặc mật khẩu sai,xin kiểm tra lại";
+            header('Location:' . BASE_URL . "/khachhang/dangnhap?msg=" . urlencode(serialize($message)));
+        } else {
 
-				$result = $khachhangmodel->getLogin($table_KH,$ten,$matkhau);
-				Session::init();
-				Session::set('khachhang',true);
-				Session::set('TenKH',$result[0]['TenKH']);
-				Session::set('IDKH',$result[0]['IDKH']);
-                $message['msg'] = "Đăng nhập tài khoản thành công";
-				header('Location:'.BASE_URL."/khachhang/dangnhap?msg=".urlencode(serialize($message)));
-			}
+            $result = $khachhangmodel->getLogin($table_KH, $ten, $matkhau);
+            Session::init();
+            Session::set('khachhang', true);
+            Session::set('TenKH', $result[0]['TenKH']);
+            Session::set('IDKH', $result[0]['IDKH']);
+            $message['msg'] = "Đăng nhập tài khoản thành công";
+            header('Location:' . BASE_URL . "/khachhang/dangnhap?msg=" . urlencode(serialize($message)));
         }
+    }
      
         public function dangnhap(){
             
