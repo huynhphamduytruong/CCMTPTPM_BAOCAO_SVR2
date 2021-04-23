@@ -54,8 +54,8 @@ class khachhang extends DBControllers{
             $result = $khachhangmodel->getLogin($table_KH, $ten, $matkhau);
             Session::init();
             Session::set('khachhang', true);
-            Session::set('TenKH', $result[0]['TenKH']);
-            Session::set('IDKH', $result[0]['IDKH']);
+            Session::set('TenKH', $result[0]['username']);
+            Session::set('IDKH', $result[0]['id']);
             $message['msg'] = "Đăng nhập tài khoản thành công";
             header('Location:' . BASE_URL . "/khachhang/dangnhap?msg=" . urlencode(serialize($message)));
         }
